@@ -13,5 +13,5 @@ jobs:
         run: |
           curl -X POST \
             -H "Content-Type: application/json" \
-            -d '{"text":"Hello from GitHub Actions 🚀- on push to main"}' \
+            -d '{"text":"Hello from GitHub Actions 🚀-- on push to main"}' \
             "${{ secrets.WEBHOOK_URL }}"
