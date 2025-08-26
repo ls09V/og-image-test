@@ -20,5 +20,5 @@ jobs:
           
           curl -X POST \
             -H "Content-Type: application/json" \
-            -d '{"text":"Hello from GitHub Actions 🚀"}' \
+            -d '{"text":"Hello from GitHub Actions-1 🚀"}' \
             "$WEBHOOK_URL"
