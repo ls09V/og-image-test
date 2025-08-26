@@ -14,5 +14,5 @@ jobs:
         run: |
           curl -X POST \
             -H "Content-Type: application/json" \
-            -d '{"text": "Hello from GitHub Actions- test1 🚀"}' \
+            -d '{"text": "Hello from GitHub Actions- test2 🚀"}' \
             "https://chat.googleapis.com/v1/spaces/AAQAu1PehHg/webhooks?key=${{ secrets.GCHAT_KEY }}&token=${{ secrets.GCHAT_TOKEN }}"
