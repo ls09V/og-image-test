@@ -1,18 +1,24 @@
 name: Send Google Chat Message
 
 on:
-  workflow_dispatch:  # you can also trigger on push, PR, etc.
-  push:
-    branches:
-      - main
+  workflow_dispatch: # run manually from GitHub UI
 
 jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
+      - name: Debug secret length (to check for newline issues)
+        run: |
+          echo "Webhook URL length: ${#GCHAT_WEBHOOK_URL}"
+        env:
+          GCHAT_WEBHOOK_URL: ${{ secrets.GCHAT_WEBHOOK_URL }}
+
       - name: Send message to Google Chat
         run: |
+          # Strip any accidental newline characters
+          WEBHOOK_URL=$(echo "${{ secrets.GCHAT_WEBHOOK_URL }}" | tr -d '\n')
+          
           curl -X POST \
             -H "Content-Type: application/json" \
-            -d '{"text": "Hello from GitHub Actions- test2 🚀"}' \
-            "https://chat.googleapis.com/v1/spaces/AAQAu1PehHg/webhooks?key=${{ secrets.GCHAT_KEY }}&token=${{ secrets.GCHAT_TOKEN }}"
+            -d '{"text":"Hello from GitHub Actions 🚀"}' \
+            "$WEBHOOK_URL"
