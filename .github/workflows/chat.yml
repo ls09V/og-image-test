@@ -1,24 +1,17 @@
-name: Send Google Chat Message
+name: Send Webhook on Push
 
 on:
-  workflow_dispatch: # run manually from GitHub UI
+  push:
+    branches:
+      - main   # triggers only when pushing to main
 
 jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Debug secret length (to check for newline issues)
+      - name: Send message to webhook
         run: |
-          echo "Webhook URL length: ${#GCHAT_WEBHOOK_URL}"
-        env:
-          GCHAT_WEBHOOK_URL: ${{ secrets.GCHAT_WEBHOOK_URL }}
-
-      - name: Send message to Google Chat
-        run: |
-          # Strip any accidental newline characters
-          WEBHOOK_URL=$(echo "${{ secrets.GCHAT_WEBHOOK_URL }}" | tr -d '\n')
-          
           curl -X POST \
             -H "Content-Type: application/json" \
-            -d '{"text":"Hello from GitHub Actions-1 🚀"}' \
-            "$WEBHOOK_URL"
+            -d '{"text":"Hello from GitHub Actions 🚀- on push to main"}' \
+            "${{ secrets.WEBHOOK_URL }}"
